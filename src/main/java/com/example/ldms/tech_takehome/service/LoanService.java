@@ -37,7 +37,7 @@ public class LoanService {
         return loanRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Loan not found"));
     }
 
-    private List<AmortisationScheduleEntry> calculateAmortisationSchedule(double principal, double annualInterestRate,
+    public List<AmortisationScheduleEntry> calculateAmortisationSchedule(double principal, double annualInterestRate,
             int termInMonths, double balloonPayment) {
         var schedule = new ArrayList<AmortisationScheduleEntry>();
         var monthlyInterestRate = annualInterestRate / 12 / 100;
@@ -70,7 +70,7 @@ public class LoanService {
         return schedule;
     }
 
-    private double calculateMonthlyPayment(double principal, double monthlyInterestRate, int termInMonths,
+    public double calculateMonthlyPayment(double principal, double monthlyInterestRate, int termInMonths,
             double balloonPayment) {
         if (balloonPayment == 0) {
             return principal * (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, termInMonths))
